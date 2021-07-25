@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>💻 Board</title>
+
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<!-- css -->
+<link rel="stylesheet" href="/resources/css/styles.css" type="text/css"> 
+<!-- <link th:href="@{/css/main.css}" rel="stylesheet" /> -->
+
+</head>
+<body>
+<div class="container">
+	<h2>Board</h2>
+
+	<a th:href="@{'/board/write_view'}" class="btn btn-info writeBtn">글작성</a>
+
+	<table class="table">
+		<tr>
+			<th class="col-sm-1">번호</th>
+			<th class="col-sm-2">제목</th>
+			<th class="col-sm-1">이름</th>
+			<th class="col-sm-1">날짜</th>
+			<th class="col-sm-1">조회수</th>
+		</tr>
+		<tr th:each="bvo : ${blist}">
+			<th scope="row" th:text="${bvo.bid}"></th>
+			<th> 
+				<a th:text="${bvo.btitle}" th:href="@{'/board/content/' + ${bvo.bgroup}}"></a>			
+			</th>
+			<th th:text="${bvo.bname}"></th>
+			<th th:text="${bvo.bdate}"></th>
+			<th th:text="${bvo.bhit}"></th>
+		</tr>
+
+	</table>
+
+</div>
+</body>
+</html>

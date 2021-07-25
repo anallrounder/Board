@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jonglo.mapper.BoardMapper">
+
+	<!-- get list -->
+	<select id="getList" resultType="com.jonglo.VO.BoardVO">
+		<![CDATA[
+			select * from mvc_board where bstep = 0 order by bid desc
+		]]>
+	</select>
+
+	<!-- get content -->
+ 	<select id="getContent" resultType="com.jonglo.VO.BoardVO">
+		<![CDATA[
+			select bid, bname, btitle, bdate, bcontent, bhit from mvc_board where bgroup = #{bgroup} and bstep =0
+		]]>
+	</select>
+
+	<!-- hit update -->										
+	<update id="uphit">
+		<![CDATA[
+			update mvc_board set bhit = bhit + 1 where bid = #{bgroup}
+		]]>
+	</update>
+
+	<!-- get reply -->
+ 	<select id="getReply" resultType="com.jonglo.VO.BoardVO">
+		<![CDATA[
+			select * from mvc_board where bgroup=#{bgroup} and bstep != 0 order by bid desc
+		]]>
+	</select>
+
+	<!-- count reply -->
+ 	<select id="countReply" resultType="int">
+		<![CDATA[
+			select count(*) from mvc_board where bgroup=#{bgroup} and bstep != 0
+		]]>
+	</select>
+
+	<delete id="deleteBoard">
+		<![CDATA[
+			delete from mvc_board where bgroup=#{bid} 
+		]]>
+	</delete>
+
+	<insert id="insert">
+		<![CDATA[
+			insert into mvc_board (bid, bname, btitle, bcontent, bhit, bgroup, bstep, bindent)
+			values (mvc_board_seq.nextval, #{bname}, #{btitle}, #{bcontent}, 0, mvc_board_seq.currval, 0, 0)
+		]]>
+	</insert>
+
+
+	<update id="update">
+		<![CDATA[
+			update mvc_board set btitle = #{btitle}, bcontent = #{bcontent}, bname=#{bname} where bid = #{bid}
+		]]>
+	</update>
+
+</mapper>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>💻 Board</title>
+
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<!-- css -->
+<link rel="stylesheet" href="/resources/css/styles.css" type="text/css"> 
+
+</head>
+<body>
+
+<div class="container">
+
+	<h4 style="padding-top:100px; padding-bottom:20px;"><b>Content</b></h4>
+
+	<!-- 제목 -->  
+  	<h3 th:text="${content_view.btitle}"></h3>
+	<hr>
+
+	<!-- info -->
+	<div style="justify-content:end">
+		<b>글번호:</b> <span th:text="${content_view.bid}"></span> |  
+		<b>작성자:</b> <span th:text="${content_view.bname}"></span> | 
+		<b>작성일:</b> <span th:text="${content_view.bdate}"></span> |
+		<b>조회수:</b> <span th:text="${content_view.bhit}"></span>
+		<span th:text="${content_view.bgroup}"></span>
+	</div>
+
+	<hr>
+	<!-- 내용 -->
+	<div th:text="${content_view.bcontent}"></div>
+
+	<hr>
+	<a th:href="@{'/board/list'}" class="btn btn-info">목록으로</a>
+ 	<a th:href="@{'/board/'+${content_view.bid}+'/mod'}" class="btn btn-info">수정하기</a>
+
+ 	<form th:action="@{'/board/'+ ${content_view.bid}}" th:method="delete">
+	 	<!-- <input type="hidden" name="_method" value="delete" /> -->
+	 	<button class="btn btn-danger">삭제</button> 
+	</form> 
+
+	<br>
+	<br>
+
+	<h4><b>Reply</b></h4>
+	<hr>
+	<div>
+		<div th:each="list: ${rlist}">
+			<div th:text="'작성자: '+ ${list.bname} + ' | 작성일: ' + ${list.bdate}"></div>
+			<br>
+			<div th:text="${list.bcontent}"></div>
+			<hr>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>

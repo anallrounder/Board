@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>💻 Board</title>
+
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<!-- ck editor -->
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+
+
+<!-- css -->
+<link rel="stylesheet" href="/resources/css/styles.css" type="text/css"> 
+
+</head>
+<body>
+
+<div class="container">
+
+	<h4><b>Content</b></h4>
+	
+  	<form th:action="@{'/board/'+${modify_view.bid}}" th:method="put">
+  		<input type="hidden" name="bid" th:value="${modify_view.bid}" />
+		<!-- 제목 -->  
+	  	<h3>제목 <input name="btitle" th:value ="${modify_view.btitle}"></h3>
+		<hr>
+
+		<!-- info -->
+		<div style="justify-content:end">
+			<b>작성자</b> <input type="text" name="bname" class="col-md-9" th:value ="${modify_view.bname}" /><br>
+			<b>글번호:</b> <span th:text="${modify_view.bid}"></span> |  
+			<b>작성일</b> <span th:text="${modify_view.bdate}"></span> |
+			<b>조회수</b> <span th:text="${modify_view.bhit}"></span>
+		</div>
+
+		<hr>
+		<!-- 내용 -->
+		<textarea name="bcontent" th:text="${modify_view.bcontent}"></textarea>
+		<script type="text/javascript">
+			var ckeditor_config = {
+				resize_enaleb : false, //에디터 크기조절 x
+				height:"450",
+				enterMode : CKEDITOR.ENTER_BR,
+				shiftEnterMode : CKEDITOR.ENTER_P,
+			};
+			CKEDITOR.replace('bcontent', ckeditor_config);
+		</script>
+
+		<input type="submit" value="글수정" class="btn btn-info"/>
+
+	</form>
+	<br>
+
+	<!-- 댓글	 -->
+	<h4><b>Reply</b></h4>
+	<hr>
+	<div>
+		<div th:each="list: ${rlist}">
+			<div th:text="'작성자: '+ ${list.bname} + ' | 작성일: ' + ${list.bdate}"></div>
+			<br>
+			<div th:text="${list.bcontent}"></div>
+			<hr>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>
